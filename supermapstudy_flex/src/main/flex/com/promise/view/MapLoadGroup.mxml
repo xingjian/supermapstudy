@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" creationComplete="init()" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%" xmlns:ns="http://www.supermap.com/iclient/2010" xmlns:ns1="http://www.supermap.com/iserverjava/2010">
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%" xmlns:ns="http://www.supermap.com/iclient/2010" xmlns:ns1="http://www.supermap.com/iserverjava/2010" xmlns:ns2="http://www.supermap.com/iserverjava/2008">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -75,7 +75,7 @@
 			<s:Label text="地图类型：" />
 			<s:DropDownList id="cb" width="200" dataProvider="{cbDataProvider}" change="cb_changeHandler(event)" />
 		</s:HGroup>
-		<ns:Map id="map">
+		<ns:Map id="map" scales="{[1.25,2.5,5,10,20]}">
 			<ns1:DynamicRESTLayer url="{mapURL}" />
 		</ns:Map>
 	</s:VGroup>
