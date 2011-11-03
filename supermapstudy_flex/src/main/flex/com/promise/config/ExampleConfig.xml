@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<menu id="menu" label="地图基础功能">
+		<menu id="menu1" label="地图加载" />
+		<menu id="menu2" label="地图操作" />
+		<menu id="menu3" label="地图查找" />
+	</menu>
+	<mapconfig id="mapconfig" label="地图配置">
+		<basemap id="baseMap" type="DynamicRESTLayer,TiledDynamicRESTLayer,TiledCachedIServerLayer" url="http://localhost:8090/iserver/services/map-traffic/rest/maps/beijing_supermap"/>
+	</mapconfig>
+</root>

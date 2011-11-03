@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" creationComplete="init()" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%" xmlns:ns="http://www.supermap.com/iclient/2010" xmlns:ns1="http://www.supermap.com/iserverjava/2010">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.supermap.web.mapping.DynamicRESTLayer;
+			import com.supermap.web.mapping.Layer;
+			import com.supermap.web.mapping.TiledCachedIServerLayer;
+			import com.supermap.web.mapping.TiledCachedLayer;
+			import com.supermap.web.mapping.TiledDynamicRESTLayer;
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			
+			import spark.events.IndexChangeEvent;
+			[Bindable]
+			private var mapURL:String = "";
+			[Bindable]
+			public var loadXML:XML;
+			[Bindable]
+			public var cbDataProvider:ArrayCollection = null;
+
+			//初始化方法
+			private function init():void{
+				var baseMapXMLList:XMLList = loadXML..basemap;
+				for each(var item:XML in baseMapXMLList){
+					if(item.@id=="baseMap"){
+						mapURL = item.@url;
+						var types:String = item.@type;
+						cbDataProvider = new ArrayCollection(types.split(","));
+					}
+				}
+				if(cbDataProvider!=null&&cbDataProvider.length>0){
+					cb.selectedIndex = 0;
+				}
+			}
+			
+			//下拉框更改事件
+			protected function cb_changeHandler(event:IndexChangeEvent):void
+			{
+				var mapType:String = DropDownList(event.target).selectedItem;
+				var layer:Layer = null;
+				if(mapType=="DynamicRESTLayer"){
+					layer = new DynamicRESTLayer();
+				}else if(mapType=="TiledDynamicRESTLayer"){
+					layer = new TiledDynamicRESTLayer();
+					var layerTemp:TiledDynamicRESTLayer = TiledDynamicRESTLayer(layer);
+					layerTemp.enableServerCaching = true;
+				}else if(mapType=="TiledCachedIServerLayer"){
+					layer = new TiledCachedIServerLayer();
+					var layerTemp1:TiledCachedIServerLayer = TiledCachedIServerLayer(layer);
+					layerTemp1.cachedUrl = "http://localhost:8090/iserver/output/";
+					layerTemp1.url = mapURL;
+					layerTemp1.mapServiceAddress = "localhost";
+					layerTemp1.mapServicePort = "8090";
+					layerTemp1.mapName = "map-traffic";
+					layerTemp1.scales = [1.25,2.5,5,10,20];
+				}
+				if(layer!=null){
+					layer.url = mapURL;
+					map.removeAllLayers();
+					map.addLayer(layer);
+					map.refresh();
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<s:VGroup width="100%" height="100%">
+		<s:HGroup verticalAlign="middle">
+			<s:Label text="地图类型：" />
+			<s:DropDownList id="cb" width="200" dataProvider="{cbDataProvider}" change="cb_changeHandler(event)" />
+		</s:HGroup>
+		<ns:Map id="map">
+			<ns1:DynamicRESTLayer url="{mapURL}" />
+		</ns:Map>
+	</s:VGroup>
+</s:Group>

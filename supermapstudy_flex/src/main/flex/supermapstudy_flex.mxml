@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" fontSize="12" fontFamily="微软雅黑" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" creationComplete="init()" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.promise.events.AppEvent;
+			import com.promise.utils.ReadXMLUtil;
+			import com.promise.view.MapLoadGroup;
+			
+			import mx.controls.Alert;
+			import mx.core.IVisualElement;
+			[Bindable]
+			private var left_panel_title:String = "功能演示区";
+			private var readXMLUtil:ReadXMLUtil = new ReadXMLUtil();
+			[Bindable]
+			private var treeDataXMLList:XMLList;
+			[Bindable]
+			private var loadXML:XML;
+			
+			private function init():void{
+				readXMLUtil.addEventListener(AppEvent.LOADXML_SUCCESS,loadSuccess);
+				readXMLUtil.xmlLoad();
+			}
+			
+			//加载成功
+			private function loadSuccess(event:AppEvent):void{
+				loadXML = event.getData() as XML;
+				treeDataXMLList = loadXML.menu;
+			}
+			
+			//树点击事件
+			private function treeNodeClick(event:MouseEvent):void{
+				var treeNodeObject:Object = menuTree.selectedItem;
+				if(null!=treeNodeObject&&treeNodeObject.id!="menu"){
+					var treeID:String = treeNodeObject.@id;
+					if(treeID=="menu1"){//地图加载
+						var mapLoadGroup:MapLoadGroup = new MapLoadGroup();
+						mapLoadGroup.loadXML = this.loadXML;
+						changeCenterPanel(mapLoadGroup);
+					}else if(treeID=="menu2"){//地图操作
+					}
+				}
+			}
+			
+			public function changeCenterPanel(element:IVisualElement):void{
+				center_panel.removeAllElements();
+				center_panel.addElement(element);
+			}
+			
+		]]>
+	</fx:Script>
+	<s:Group width="100%" height="100%">
+		<mx:HDividedBox width="100%"  height="100%">
+			<s:Panel id="left_panel" width="20%" height="100%" title="SuperMap功能目录树">
+				<mx:Tree id="menuTree" width="100%" click="treeNodeClick(event)" height="100%" labelField="@label" showRoot="true" dataProvider="{treeDataXMLList}" />
+			</s:Panel>
+			<s:Panel id="center_panel" width="80%" height="100%" title="{left_panel_title}">
+				
+			</s:Panel>
+		</mx:HDividedBox>
+	</s:Group>
+</s:Application>
