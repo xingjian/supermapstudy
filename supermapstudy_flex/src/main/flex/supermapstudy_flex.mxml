@@ -9,6 +9,7 @@
 		<![CDATA[
 			import com.promise.events.AppEvent;
 			import com.promise.utils.ReadXMLUtil;
+			import com.promise.view.MapGetXYGroup;
 			import com.promise.view.MapLoadGroup;
 			
 			import mx.controls.Alert;
@@ -42,6 +43,11 @@
 						mapLoadGroup.loadXML = this.loadXML;
 						changeCenterPanel(mapLoadGroup);
 					}else if(treeID=="menu2"){//地图操作
+					}else if(treeID=="menu3"){//地图查找
+					}else if(treeID=="menu4"){//获取坐标
+						var mapGetXYGroup:MapGetXYGroup = new MapGetXYGroup();
+						mapGetXYGroup.loadXML = this.loadXML;
+						changeCenterPanel(mapGetXYGroup);
 					}
 				}
 			}
