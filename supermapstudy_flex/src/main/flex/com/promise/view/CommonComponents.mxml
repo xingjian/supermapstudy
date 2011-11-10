@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" creationComplete="init()" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" fontFamily="微软雅黑"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%" xmlns:ns="http://www.supermap.com/iclient/2010" xmlns:ns1="http://www.supermap.com/iserverjava/2010">
+	<fx:Declarations>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			[Bindable]
+			private var mapURL:String = "";
+			[Bindable]
+			public var loadXML:XML;
+			
+			public function init():void{
+				var baseMapXMLList:XMLList = loadXML..basemap;
+				for each(var item:XML in baseMapXMLList){
+					if(item.@id=="baseMap"){
+						mapURL = item.@url;
+					}
+				}
+			}
+		]]>
+	</fx:Script>
+	<ns:Map id="map" scales="{[1.25,2.5,5,10,20]}">
+		<ns1:DynamicRESTLayer url="{mapURL}" />
+	</ns:Map>
+	<ns:Compass map="{map}" top="10" left="10" />
+	<ns:ZoomSlider map="{map}" top="84" left="30" />
+	<ns:ScaleBar map="{map}" bottom="30" left="20" />
+	<ns:OverviewMap map="{map}" right="0" top="0">
+		<ns1:DynamicRESTLayer url="{mapURL}" />
+	</ns:OverviewMap>
+	<ns:Magnifier map="{map}" radius="80" zoomFactor="2" x="100" y="150">
+		<ns:layer>
+			<ns1:DynamicRESTLayer url="{mapURL}" />
+		</ns:layer>
+	</ns:Magnifier>
+</s:Group>

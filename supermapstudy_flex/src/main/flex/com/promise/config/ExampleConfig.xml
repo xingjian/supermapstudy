@@ -5,6 +5,7 @@
 		<menu id="menu2" label="地图操作" />
 		<menu id="menu3" label="地图查找" />
 		<menu id="menu4" label="获取坐标" />
+		<menu id="menu5" label="通用组件" />
 	</menu>
 	<mapconfig id="mapconfig" label="地图配置">
 		<basemap id="baseMap" type="DynamicRESTLayer,TiledDynamicRESTLayer,TiledCachedIServerLayer" url="http://localhost:8090/iserver/services/map-traffic/rest/maps/beijing_supermap"/>

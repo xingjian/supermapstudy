@@ -9,6 +9,7 @@
 		<![CDATA[
 			import com.promise.events.AppEvent;
 			import com.promise.utils.ReadXMLUtil;
+			import com.promise.view.CommonComponents;
 			import com.promise.view.MapGetXYGroup;
 			import com.promise.view.MapLoadGroup;
 			
@@ -48,6 +49,10 @@
 						var mapGetXYGroup:MapGetXYGroup = new MapGetXYGroup();
 						mapGetXYGroup.loadXML = this.loadXML;
 						changeCenterPanel(mapGetXYGroup);
+					}else if(treeID=="menu5"){//通用组件
+						var commonCompontnts:CommonComponents = new CommonComponents();
+						commonCompontnts.loadXML = this.loadXML;
+						changeCenterPanel(commonCompontnts);
 					}
 				}
 			}
