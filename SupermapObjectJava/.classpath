@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.6.0_10"/>
+	<classpathentry kind="lib" path="E:/eclipse4.2HomeWorkspace/SupermapObjectJava/lib/com.supermap.data.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/D:/SMO_Java_612_9509_34803_32_x86_Win_vc9_CHS_Zip/Help/SuperMap Objects Java Javadoc.zip!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="E:/eclipse4.2HomeWorkspace/SupermapObjectJava/lib/junit-4.8.2.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
