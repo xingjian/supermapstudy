@@ -155,10 +155,10 @@ public class SuperMapUtil {
 	}
 
 	/**
-	 * 等值线分析,将结果集
+	 * 提取等值线,将结果集暂时输出
 	 */
-	public static Feature[] IDWAnalysis(Point2D[] points,double[] zValues,double resolution,ExtractParameter parameter,DataReturnOption resultSetting){
-		SpatialAnalystImpl spatialAnalyst = new SpatialAnalystImpl();
+	public static Feature[] IDWAnalysis(Point2D[] points,double[] zValues,double resolution,ExtractParameter parameter,DataReturnOption resultSetting,MapContext mapContext){
+		SpatialAnalystImpl spatialAnalyst = new SpatialAnalystImpl(mapContext);
 		DatasetSpatialAnalystResult dsar = spatialAnalyst.extractIsoline(points,zValues,resolution,parameter,resultSetting);
 		if(dsar.succeed){
 			Recordset recordset = dsar.recordset;
