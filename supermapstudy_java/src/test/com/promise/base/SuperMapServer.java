@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import com.promise.idw.vo.StationRain;
 import com.promise.supermap.SuperMapUtil;
+import com.supermap.services.components.MapContext;
 import com.supermap.services.components.commontypes.DataReturnMode;
 import com.supermap.services.components.commontypes.DataReturnOption;
 import com.supermap.services.components.commontypes.ExtractParameter;
@@ -29,6 +30,9 @@ import com.supermap.services.components.commontypes.Rectangle2D;
 import com.supermap.services.components.commontypes.ReturnType;
 import com.supermap.services.components.commontypes.SmoothMethod;
 import com.supermap.services.components.impl.MapImpl;
+import com.supermap.services.components.spi.MapProvider;
+import com.supermap.services.providers.RestMapProvider;
+import com.supermap.services.providers.RestMapProviderSetting;
 
 
 /**   
@@ -164,13 +168,24 @@ public class SuperMapServer {
 	
 	@Test
 	public void testIDWAnalysis(){
+		// 初始化一个REST地图服务提供者。
+		RestMapProviderSetting providerSetting = new RestMapProviderSetting();
+		// 指定REST地图服务提供者所使用的REST服务地址。
+		providerSetting.restServiceRootURL = strURL;
+		// 构建 RestMapProvider 对象
+		RestMapProvider restMapProvider = new RestMapProvider(providerSetting);
+		List<MapProvider> providers = new ArrayList<MapProvider>();
+		providers.add(restMapProvider);
+		// 初始化地图服务组件上下文对象。
+		MapContext mapContext = new MapContext();
+		mapContext.setProviders(providers);
 		ExtractParameter ep = new ExtractParameter();
 		ep.smoothMethod = SmoothMethod.BSPLINE;
 		ep.smoothness = 3;
 		ep.interval = 5;//等值距
 		DataReturnOption dro = new DataReturnOption();
 		dro.dataReturnMode = DataReturnMode.DATASET_AND_RECORDSET;
-		Feature[] features = SuperMapUtil.IDWAnalysis(points, zValue, 0.001148, ep,dro);
+		Feature[] features = SuperMapUtil.IDWAnalysis(points, zValue, 0.001148, ep,dro,mapContext);
 		System.out.println(features.length);
 	}
 }
